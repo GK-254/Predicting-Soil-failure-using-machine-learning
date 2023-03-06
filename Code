@@ -1,0 +1,25 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+# Load the data
+data = pd.read_csv('soil_data.csv')
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data[['porosity', 'permeability', 'grain_size_distribution']], data['soil_failure'], test_size=0.2, random_state=42)
+
+# Train a decision tree classifier
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Calculate the accuracy and confusion matrix
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+
+# Print the results
+print('Accuracy:', accuracy)
+print('Confusion Matrix:', cm)
